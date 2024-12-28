@@ -362,9 +362,6 @@ class TransmittingApp(ctk.CTk):
             print(e)
             pass
 
-
-
-
     def open_receive_page(self):
         """Transition to receive page"""
         self.landing_frame.pack_forget()
@@ -420,7 +417,6 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             self.after(0, self.handle_receive_error, str(e))
-
 
     def file_decoder(self):
             global content
@@ -528,7 +524,7 @@ class TransmittingApp(ctk.CTk):
             file_size = os.path.getsize(self.selected_file_path)
             size_str = self.format_file_size(file_size)
             self.file_size_label.configure(text=f"Size: {size_str}")
-            
+
             # Change file icon color and enable send button
             self.file_icon_label.configure(text_color="black")
             self.send_file_button.configure(state="normal")
@@ -547,6 +543,7 @@ class TransmittingApp(ctk.CTk):
         preamble_lenth=59*3000
         filesize_old=0
         transmited_lenth=os.path.getsize('./out')
+        
         while  transmited_lenth<imputtep_size:
             time.sleep(0.1)
             sendedsize=os.path.getsize('./out')
@@ -554,9 +551,9 @@ class TransmittingApp(ctk.CTk):
             filesize_old=sendedsize
             transmited_lenth=os.path.getsize('./out')
             percentage=min(max(0,(transmited_lenth-preamble_lenth)/original_file_size)*100,100)
+            self.file_size_label.configure(text=f"Size: {percentage}%")
             print(percentage)
             print(speed)
-
 
     def send_file(self):
         """Send file using Telelink.py"""
@@ -640,8 +637,6 @@ class TransmittingApp(ctk.CTk):
         # Run in a separate thread to prevent GUI freezing
         threading.Thread(target=run_telelink, daemon=True).start()
         self.trasmmision_states()
-
-
 
     def handle_transmission_success(self, output):
         """Handle successful file transmission"""
