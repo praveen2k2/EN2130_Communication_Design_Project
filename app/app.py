@@ -1,3 +1,4 @@
+from itertools import count
 import customtkinter as ctk
 import os
 import threading
@@ -408,8 +409,7 @@ class TransmittingApp(ctk.CTk):
         """Transition to the LiveStreaming page"""
         self.landing_frame.pack_forget()
         self.livestream_frame.pack(expand=True, fill="both")
-
-    
+  
     def show_file_page(self):
         """Return to file selection page"""
         self.send_loading_frame.pack_forget()
@@ -422,8 +422,7 @@ class TransmittingApp(ctk.CTk):
         # Start progress and host process
         threading.Thread(target=self.start_host_process, daemon=True).start()
         threading.Thread(target=self.update_stream_progress, daemon=True).start()
-        
-    
+          
     def start_host_process(self):
         """Run Telelink receiver script and handle results"""
         try:
@@ -497,9 +496,6 @@ class TransmittingApp(ctk.CTk):
             print(e)
             pass
 
-
-
-
     def open_receive_page(self):
         """Transition to receive page"""
         self.landing_frame.pack_forget()
@@ -521,7 +517,6 @@ class TransmittingApp(ctk.CTk):
         with open('./rx.tmp','wb') as output:pass
         threading.Thread(target=self.file_decoder,daemon=True).start()
 
-
     def update_progress(self):
         """Simulate loading progress"""
         progress = 0
@@ -531,7 +526,6 @@ class TransmittingApp(ctk.CTk):
             self.progress_bar.set(progress)
         self.receive_status_icon.configure(text="🌱", text_color="gray")
         self.receive_status_text.configure(text="Ready to receive", text_color="gray")
-
 
     def start_receive_process(self):
         """Run Telelink receiver script and handle results"""
@@ -557,7 +551,6 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             self.after(0, self.handle_receive_error, str(e))
-
 
     def file_decoder(self):
             global content
@@ -630,7 +623,6 @@ class TransmittingApp(ctk.CTk):
         self.landing_frame.pack_forget()
         self.file_frame.pack(expand=True, fill="both")
 
-
     def select_file(self):
         """Open file dialog to select a file"""
         self.selected_file_path = filedialog.askopenfilename()
@@ -667,6 +659,38 @@ class TransmittingApp(ctk.CTk):
         threading.Thread(target=self.run_telelink, daemon=True).start()
         threading.Thread(target=self.update_send_progress, daemon=True).start()
         
+    def trasmmision_states(self):
+        with open('./out', 'wb') as output:pass
+        imputtep_size=os.path.getsize('./input.tmp')
+        original_file_size=os.path.getsize(self.selected_file_path)
+        preamble_lenth=59*3000
+        filesize_old=0
+        transmited_lenth=os.path.getsize('./out')
+        self.send_progress_bar.set(0)
+        speed=0
+        count=0
+        while  transmited_lenth<imputtep_size:
+            time.sleep(0.1)
+            if(count>=10):
+                sendedsize=os.path.getsize('./out')
+                speed=(sendedsize-filesize_old)
+                filesize_old=sendedsize
+                count=0
+            transmited_lenth=os.path.getsize('./out')
+
+            percentage=min(max(((transmited_lenth-preamble_lenth)/original_file_size)*100,0),100)
+            self.send_status_icon.configure(text=f"{round(percentage,2)}%", text_color="green")
+            if(percentage==0):
+                self.send_status_text.configure(text=f"synchronizing at speed of {round(speed/1000*8,3)}Kbps", text_color="red")
+            else:self.send_status_text.configure(text=f"Uploading at speed of {round(speed/1000*8,3)}Kbps", text_color="green")
+           
+            self.send_progress_bar.set(percentage/100)
+            self.sending_file_label.configure()
+            count+=1
+
+        self.send_status_text.configure(text=f"0 Kbps", text_color="green")
+   
+
     def update_send_progress(self):
         """Update send loading progress"""
 
@@ -683,11 +707,11 @@ class TransmittingApp(ctk.CTk):
         progress = 0
         while progress < 1.0:
             time.sleep(0.1)
-            progress += 0.015
+            progress += 0.02
             self.send_progress_bar.set(progress)
+        self.trasmmision_states()
         # self.send_status_icon.configure(text="🌳", text_color="green")
         # self.send_status_text.configure(text="File Sent Successfully", text_color="green")
-
 
     def run_telelink(self):
             try:
@@ -756,8 +780,7 @@ class TransmittingApp(ctk.CTk):
             except Exception as e:
                 # Handle other unexpected errors
                 self.after(0, self.handle_transmission_error, str(e))
-
-
+ 
     def handle_transmission_success(self, output):
         """Updated transmission success handler"""
         self.send_status_icon.configure(text="🌳", text_color="green")

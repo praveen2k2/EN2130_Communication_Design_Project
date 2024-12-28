@@ -698,7 +698,7 @@ blocks:
     bus_structure: null
     coordinate: [800, 1212.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_delay_0
   id: blocks_delay
   parameters:
@@ -744,7 +744,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: ./tx.tmp
+    file: ./out
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -752,7 +752,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [744, 216.0]
+    coordinate: [1648, 1064.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0
@@ -814,7 +814,7 @@ blocks:
     bus_structure: null
     coordinate: [1368, 1204.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_repack_bits_bb_0_0
   id: blocks_repack_bits_bb
   parameters:
@@ -914,7 +914,7 @@ blocks:
     bus_structure: null
     coordinate: [880, 540.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -972,7 +972,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 860.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: blocks_unpack_k_bits_bb_0_0
   id: blocks_unpack_k_bits_bb
   parameters:
@@ -1009,7 +1009,7 @@ blocks:
     bus_structure: null
     coordinate: [1208, 496.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1060,7 +1060,7 @@ blocks:
     bus_structure: null
     coordinate: [2352, 860.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: digital_constellation_modulator_0
   id: digital_constellation_modulator
   parameters:
@@ -1101,7 +1101,7 @@ blocks:
     bus_structure: null
     coordinate: [304, 1192.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_costas_loop_cc_0
   id: digital_costas_loop_cc
   parameters:
@@ -1119,7 +1119,7 @@ blocks:
     bus_structure: null
     coordinate: [2288, 452.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_diff_decoder_bb_0
   id: digital_diff_decoder_bb
   parameters:
@@ -1136,7 +1136,7 @@ blocks:
     bus_structure: null
     coordinate: [1704, 852.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: digital_linear_equalizer_0_0
   id: digital_linear_equalizer
   parameters:
@@ -1157,7 +1157,7 @@ blocks:
     bus_structure: null
     coordinate: [1976, 484.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_map_bb_0
   id: digital_map_bb
   parameters:
@@ -1174,7 +1174,7 @@ blocks:
     bus_structure: null
     coordinate: [1472, 860.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: digital_map_bb_0_0
   id: digital_map_bb
   parameters:
@@ -1190,7 +1190,7 @@ blocks:
     bus_structure: null
     coordinate: [640, 1212.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_protocol_formatter_bb_0
   id: digital_protocol_formatter_bb
   parameters:
@@ -1234,7 +1234,7 @@ blocks:
     bus_structure: null
     coordinate: [1528, 456.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: fec_extended_tagged_decoder_2
   id: fec_extended_tagged_decoder
   parameters:
@@ -1255,7 +1255,7 @@ blocks:
     bus_structure: null
     coordinate: [1008, 1172.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: fec_extended_tagged_encoder_0_1
   id: fec_extended_tagged_encoder
   parameters:
@@ -1887,7 +1887,7 @@ blocks:
     bus_structure: null
     coordinate: [1240, 1004.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_source_0
   id: virtual_source
   parameters:
@@ -1926,7 +1926,7 @@ blocks:
     bus_structure: null
     coordinate: [16, 1212.0]
     rotation: 0
-    state: disabled
+    state: enabled
 
 connections:
 - [blocks_char_to_float_0, '0', qtgui_time_sink_x_0, '0']
@@ -1938,11 +1938,11 @@ connections:
 - [blocks_file_source_0, '0', blocks_throttle2_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', soapy_bladerf_sink_0, '0']
 - [blocks_repack_bits_bb_0, '0', blocks_file_sink_0, '0']
+- [blocks_repack_bits_bb_0, '0', blocks_file_sink_1, '0']
 - [blocks_repack_bits_bb_0_0, '0', blocks_char_to_float_1, '0']
 - [blocks_repack_bits_bb_0_0, '0', fec_extended_tagged_encoder_0_1, '0']
 - [blocks_repack_bits_bb_0_0_0, '0', blocks_tagged_stream_mux_0, '1']
 - [blocks_repack_bits_bb_0_0_0, '0', digital_protocol_formatter_bb_0, '0']
-- [blocks_stream_to_tagged_stream_0, '0', blocks_file_sink_1, '0']
 - [blocks_stream_to_tagged_stream_0, '0', blocks_repack_bits_bb_0_0, '0']
 - [blocks_tagged_stream_mux_0, '0', virtual_sink_0_0, '0']
 - [blocks_throttle2_0, '0', channels_channel_model_0, '0']
