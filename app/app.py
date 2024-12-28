@@ -126,7 +126,7 @@ class TransmittingApp(ctk.CTk):
             self.livestream_frame, 
             text="Back", 
             font=("Roboto", 15),
-            command=self.show_slanding_page,
+            command=self.show_sslanding_page,
             fg_color="#FF6F61",  # Coral
             hover_color="#FF4F4F",  # Light Red
             text_color="white",
@@ -330,7 +330,7 @@ class TransmittingApp(ctk.CTk):
         stream_back_button = ctk.CTkButton(
             self.stream_loading_frame, 
             text="Back", 
-            command=self.show_landing_page,
+            command=self.show_slanding_page,
             fg_color="#E74C3C",
             hover_color="#C0392B",
             text_color="white"
@@ -385,8 +385,8 @@ class TransmittingApp(ctk.CTk):
             text_color="white"
         )
         send_back_button.pack(side="bottom", pady=20)
-    
-    def show_slanding_page(self):
+
+    def show_sslanding_page(self):
         """Return to landing page"""
         # Hide the current frame
         if self.livestream_frame.winfo_ismapped():
@@ -394,6 +394,15 @@ class TransmittingApp(ctk.CTk):
 
         # Show landing page
         self.landing_frame.pack(expand=True, fill="both")
+    
+    def show_slanding_page(self):
+        """Return to landing page"""
+        # Hide the current frame
+        if self.stream_loading_frame.winfo_ismapped():
+            self.stream_loading_frame.pack_forget()
+
+        # Show landing page
+        self.livestream_frame.pack(expand=True, fill="both")
 
     def open_livestream_page(self):
         """Transition to the LiveStreaming page"""
@@ -443,7 +452,6 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             print(e)
-            self.show_slanding_page(self)
 
     def start_client(self):
         """Start client functionality with loading screen"""
@@ -596,6 +604,7 @@ class TransmittingApp(ctk.CTk):
         self.receive_status_icon.configure(text="❌", text_color="red")
         self.receive_status_text.configure(text="File Reception Failed", text_color="red")
         self.received_file_label.configure(text=f"Error: {error}")
+        self.show_landing_page()
         
         # Optional: Show error message
         tk.messagebox.showerror("Receive Error", error)
