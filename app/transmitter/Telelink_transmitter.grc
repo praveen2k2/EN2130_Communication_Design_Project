@@ -9,7 +9,7 @@ options:
     description: cdp project
     gen_cmake: 'On'
     gen_linking: dynamic
-    generate_options: qt_gui
+    generate_options: no_gui
     hier_block_src_path: '.:'
     id: Telelink_transmitter
     max_nouts: '0'
@@ -109,7 +109,7 @@ blocks:
     bus_structure: null
     coordinate: [3176, 8.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: eq_gain
   id: variable_qtgui_range
   parameters:
@@ -130,7 +130,7 @@ blocks:
     bus_structure: null
     coordinate: [3056, 248.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: excess_bw
   id: variable
   parameters:
@@ -161,7 +161,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3400, 132.0]
+    coordinate: [3648, 96.0]
+    rotation: 0
+    state: disabled
+- name: freq
+  id: variable
+  parameters:
+    comment: ''
+    value: 2.4e9
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3888, 336.0]
     rotation: 0
     state: enabled
 - name: freq_offset
@@ -184,7 +196,7 @@ blocks:
     bus_structure: null
     coordinate: [3056, 120.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: hdr_format
   id: variable_header_format_default
   parameters:
@@ -219,7 +231,7 @@ blocks:
     bus_structure: null
     coordinate: [3416, 8.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: k
   id: variable
   parameters:
@@ -264,7 +276,7 @@ blocks:
     bus_structure: null
     coordinate: [3056, 8.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: phase_bw
   id: variable_qtgui_range
   parameters:
@@ -285,7 +297,7 @@ blocks:
     bus_structure: null
     coordinate: [3176, 248.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: polys
   id: variable
   parameters:
@@ -338,7 +350,7 @@ blocks:
     bus_structure: null
     coordinate: [3312, 248.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: rf_gain_0
   id: variable_qtgui_range
   parameters:
@@ -359,7 +371,7 @@ blocks:
     bus_structure: null
     coordinate: [3312, 120.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: rf_gain_sink
   id: variable_qtgui_range
   parameters:
@@ -380,7 +392,7 @@ blocks:
     bus_structure: null
     coordinate: [3240, 112.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: rrc_taps
   id: variable
   parameters:
@@ -497,7 +509,7 @@ blocks:
     bus_structure: null
     coordinate: [3192, 120.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: timing_loop_bw
   id: variable_qtgui_range
   parameters:
@@ -518,7 +530,7 @@ blocks:
     bus_structure: null
     coordinate: [3288, 8.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: tx_freq
   id: variable
   parameters:
@@ -544,6 +556,18 @@ blocks:
     rotation: 0
     state: enabled
 - name: txgain
+  id: variable
+  parameters:
+    comment: ''
+    value: '50'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [3880, 400.0]
+    rotation: 0
+    state: enabled
+- name: txgain
   id: variable_qtgui_range
   parameters:
     comment: ''
@@ -561,9 +585,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2640, 500.0]
+    coordinate: [3640, 264.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: variable_adaptive_algorithm_0
   id: variable_adaptive_algorithm
   parameters:
@@ -596,7 +620,7 @@ blocks:
     bus_structure: null
     coordinate: [8, 28.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: MTU
   id: parameter
   parameters:
@@ -681,7 +705,7 @@ blocks:
     bus_structure: null
     coordinate: [912, 36.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_char_to_float_1_1
   id: blocks_char_to_float
   parameters:
@@ -737,6 +761,24 @@ blocks:
     coordinate: [1648, 1192.0]
     rotation: 0
     state: disabled
+- name: blocks_file_sink_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: ./out
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 216.0]
+    rotation: 0
+    state: enabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -1025,7 +1067,7 @@ blocks:
     bus_structure: null
     coordinate: [3400, 236.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_constellation_decoder_cb_0
   id: digital_constellation_decoder_cb
   parameters:
@@ -1101,7 +1143,7 @@ blocks:
     bus_structure: null
     coordinate: [2288, 452.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_diff_decoder_bb_0
   id: digital_diff_decoder_bb
   parameters:
@@ -1139,7 +1181,7 @@ blocks:
     bus_structure: null
     coordinate: [1976, 484.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_map_bb_0
   id: digital_map_bb
   parameters:
@@ -1216,7 +1258,7 @@ blocks:
     bus_structure: null
     coordinate: [1528, 456.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: fec_extended_tagged_decoder_2
   id: fec_extended_tagged_decoder
   parameters:
@@ -1348,7 +1390,7 @@ blocks:
     bus_structure: null
     coordinate: [2312, 316.0]
     rotation: 180
-    state: enabled
+    state: disabled
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -1429,7 +1471,7 @@ blocks:
     bus_structure: null
     coordinate: [784, 676.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_freq_sink_x_1
   id: qtgui_freq_sink_x
   parameters:
@@ -1510,7 +1552,7 @@ blocks:
     bus_structure: null
     coordinate: [1520, 300.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_number_sink_0
   id: qtgui_number_sink
   parameters:
@@ -1573,7 +1615,7 @@ blocks:
     bus_structure: null
     coordinate: [1120, 4.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -1801,7 +1843,7 @@ blocks:
     bus_structure: null
     coordinate: [3392, 292.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: soapy_bladerf_sink_0
   id: soapy_bladerf_sink
   parameters:
@@ -1819,7 +1861,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 320.0]
+    coordinate: [976, 272.0]
     rotation: 0
     state: enabled
 - name: soapy_bladerf_source_0
@@ -1843,7 +1885,7 @@ blocks:
     bus_structure: null
     coordinate: [1232, 312.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
@@ -1924,6 +1966,7 @@ connections:
 - [blocks_repack_bits_bb_0_0, '0', fec_extended_tagged_encoder_0_1, '0']
 - [blocks_repack_bits_bb_0_0_0, '0', blocks_tagged_stream_mux_0, '1']
 - [blocks_repack_bits_bb_0_0_0, '0', digital_protocol_formatter_bb_0, '0']
+- [blocks_stream_to_tagged_stream_0, '0', blocks_file_sink_1, '0']
 - [blocks_stream_to_tagged_stream_0, '0', blocks_repack_bits_bb_0_0, '0']
 - [blocks_tagged_stream_mux_0, '0', virtual_sink_0_0, '0']
 - [blocks_throttle2_0, '0', channels_channel_model_0, '0']

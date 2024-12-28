@@ -7,7 +7,6 @@ from tkinter import filedialog
 from PIL import Image, ImageTk  # Import Image and ImageTk
 from Crypto.Cipher import AES
 import time
-
 from sympy import true
 
 class TransmittingApp(ctk.CTk):
@@ -386,6 +385,7 @@ class TransmittingApp(ctk.CTk):
         threading.Thread(target=self.start_receive_process, daemon=True).start()
         with open('./rx.tmp','wb') as output:pass
         threading.Thread(target=self.file_decoder,daemon=True).start()
+
     def update_progress(self):
         """Simulate loading progress"""
         progress = 0
@@ -395,7 +395,6 @@ class TransmittingApp(ctk.CTk):
             self.progress_bar.set(progress)
         self.receive_status_icon.configure(text="🌱", text_color="gray")
         self.receive_status_text.configure(text="Ready to recieve", text_color="gray")
-
 
     def start_receive_process(self):
         """Run Telelink receiver script and handle results"""
@@ -541,6 +540,23 @@ class TransmittingApp(ctk.CTk):
                 return f"{size_bytes:.1f} {unit}"
             size_bytes /= 1024.0
 
+    def trasmmision_states(self):
+        imputtep_size=os.path.getsize('./input.tmp')
+        original_file_size=os.path.getsize(self.selected_file_path)
+        preamble_lenth=59*3000
+        filesize_old=0
+        transmited_lenth=os.path.getsize('./out')
+        while  transmited_lenth<imputtep_size:
+            time.sleep(0.1)
+            sendedsize=os.path.getsize('./out')
+            speed=(sendedsize-filesize_old)/0.1
+            filesize_old=sendedsize
+
+            transmited_lenth=
+            print(speed)
+
+
+
     def send_file(self):
         """Send file using Telelink.py"""
         if not self.selected_file_path:
@@ -620,8 +636,11 @@ class TransmittingApp(ctk.CTk):
                 # Handle other unexpected errors
                 self.after(0, self.handle_transmission_error, str(e))
 
+        self.trasmmision_states()
         # Run in a separate thread to prevent GUI freezing
         threading.Thread(target=run_telelink, daemon=True).start()
+
+
 
     def handle_transmission_success(self, output):
         """Handle successful file transmission"""
