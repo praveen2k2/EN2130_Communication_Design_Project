@@ -673,7 +673,7 @@ class TransmittingApp(ctk.CTk):
             time.sleep(0.1)
             if(count>=10):
                 sendedsize=os.path.getsize('./out')
-                speed=(sendedsize-filesize_old)
+                speed=(sendedsize-filesize_old)/1.1
                 filesize_old=sendedsize
                 count=0
             transmited_lenth=os.path.getsize('./out')
@@ -682,7 +682,8 @@ class TransmittingApp(ctk.CTk):
             self.send_status_icon.configure(text=f"{round(percentage,2)}%", text_color="green")
             if(percentage==0):
                 self.send_status_text.configure(text=f"synchronizing at speed of {round(speed/1000*8,3)}Kbps", text_color="red")
-            else:self.send_status_text.configure(text=f"Uploading at speed of {round(speed/1000*8,3)}Kbps", text_color="green")
+            else:self.send_status_text.configure(text=f"{os.path.basename(self.selected_file_path)} is uploading at speed of {round(speed/1000*8,3)}Kbps", text_color="green")
+            self.sending_file_label.configure(text=f"{transmited_lenth/1000}KB of bytes trassmited")
            
             self.send_progress_bar.set(percentage/100)
             self.sending_file_label.configure()
