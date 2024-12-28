@@ -78,7 +78,7 @@ class TransmittingApp(ctk.CTk):
         )
         recieve_button.pack(pady=(20,20))
 
-             # LiveStreaming (Beta) Button
+        # LiveStreaming (Beta) Button
         livestream_button = ctk.CTkButton(
             self.landing_frame, 
             text="Live Streaming (Beta)", 
@@ -296,6 +296,95 @@ class TransmittingApp(ctk.CTk):
             text_color="white"
         )
         back_button.pack(side="bottom", pady=20)
+
+    # Add Loading Frame for Host/Client
+        self.stream_loading_frame = ctk.CTkFrame(self, fg_color="white")
+        
+        # Loading Status Icon
+        self.stream_status_icon = ctk.CTkLabel(
+            self.stream_loading_frame, 
+            text="🫘", 
+            font=("Arial", 142),
+            text_color="gray"
+        )
+        self.stream_status_icon.pack(pady=(120,10))
+
+        # Loading Status Text
+        self.stream_status_text = ctk.CTkLabel(
+            self.stream_loading_frame, 
+            text="Initializing Stream...", 
+            font=("Arial", 18),
+            text_color="gray"
+        )
+        self.stream_status_text.pack(pady=10)
+
+        # Stream Progress Bar
+        self.stream_progress_bar = ctk.CTkProgressBar(
+            self.stream_loading_frame, 
+            orientation="horizontal", 
+            width=400
+        )
+        self.stream_progress_bar.pack(pady=(20, 10))
+        
+        # Back Button for Stream Loading
+        stream_back_button = ctk.CTkButton(
+            self.stream_loading_frame, 
+            text="Back", 
+            command=self.show_landing_page,
+            fg_color="#E74C3C",
+            hover_color="#C0392B",
+            text_color="white"
+        )
+        stream_back_button.pack(side="bottom", pady=20)
+
+        # Add Send Loading Frame
+        self.send_loading_frame = ctk.CTkFrame(self, fg_color="white")
+        
+        # Send Loading Status Icon
+        self.send_status_icon = ctk.CTkLabel(
+            self.send_loading_frame, 
+            text="🫘", 
+            font=("Arial", 142),
+            text_color="gray"
+        )
+        self.send_status_icon.pack(pady=(120,10))
+
+        # Send Loading Status Text
+        self.send_status_text = ctk.CTkLabel(
+            self.send_loading_frame, 
+            text="Preparing to Send...", 
+            font=("Arial", 18),
+            text_color="gray"
+        )
+        self.send_status_text.pack(pady=10)
+
+        # Send File Name Label
+        self.sending_file_label = ctk.CTkLabel(
+            self.send_loading_frame, 
+            text="", 
+            font=("Arial", 14),
+            text_color="black"
+        )
+        self.sending_file_label.pack(pady=10)
+
+        # Send Progress Bar
+        self.send_progress_bar = ctk.CTkProgressBar(
+            self.send_loading_frame, 
+            orientation="horizontal", 
+            width=400
+        )
+        self.send_progress_bar.pack(pady=(20, 10))
+        
+        # Back Button for Send Loading
+        send_back_button = ctk.CTkButton(
+            self.send_loading_frame, 
+            text="Back", 
+            command=self.show_file_page,
+            fg_color="#E74C3C",
+            hover_color="#C0392B",
+            text_color="white"
+        )
+        send_back_button.pack(side="bottom", pady=20)
     
     def show_slanding_page(self):
         """Return to landing page"""
@@ -311,14 +400,32 @@ class TransmittingApp(ctk.CTk):
         self.landing_frame.pack_forget()
         self.livestream_frame.pack(expand=True, fill="both")
 
-    def start_host(self):
-        """Placeholder for starting host functionality"""
-        print("Starting host process...")
-        threading.Thread(target=self.start_host_process, daemon=True).start()
+    
+    def show_file_page(self):
+        """Return to file selection page"""
+        self.send_loading_frame.pack_forget()
+        self.file_frame.pack(expand=True, fill="both")
 
+    def start_host(self):
+        """Start host functionality with loading screen"""
+        
+        
+        # Start progress and host process
+        threading.Thread(target=self.start_host_process, daemon=True).start()
+        threading.Thread(target=self.update_stream_progress, daemon=True).start()
+        
+    
     def start_host_process(self):
         """Run Telelink receiver script and handle results"""
         try:
+            self.livestream_frame.pack_forget()
+            self.stream_loading_frame.pack(expand=True, fill="both")
+            
+            # Reset and start progress
+            self.stream_progress_bar.set(0)
+            self.stream_status_icon.configure(text="🫘", text_color="gray")
+            self.stream_status_text.configure(text="Initializing Host...")
+            
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
                 ['python3', self.path+r'/stream/Telelink_host.py'],
@@ -336,12 +443,31 @@ class TransmittingApp(ctk.CTk):
         except Exception as e:
             # Handle any unexpected errors
             print(e)
-            pass
+            self.show_slanding_page(self)
 
     def start_client(self):
-        """Placeholder for starting client functionality"""
-        print("Starting client process...")
+        """Start client functionality with loading screen"""
+        self.livestream_frame.pack_forget()
+        self.stream_loading_frame.pack(expand=True, fill="both")
+        
+        # Reset and start progress
+        self.stream_progress_bar.set(0)
+        self.stream_status_icon.configure(text="🫘", text_color="gray")
+        self.stream_status_text.configure(text="Initializing Client...")
+        
+        # Start progress and client process
+        threading.Thread(target=self.update_stream_progress, daemon=True).start()
         threading.Thread(target=self.start_client_process, daemon=True).start()
+
+    def update_stream_progress(self):
+        """Update stream loading progress"""
+        progress = 0
+        while progress < 1.0:
+            time.sleep(0.1)
+            progress += 0.015
+            self.stream_progress_bar.set(progress)
+        self.stream_status_icon.configure(text="🌳", text_color="green")
+        self.stream_status_text.configure(text="Stream Ready", text_color="green")
 
     def start_client_process(self):
         """Run Telelink receiver script and handle results"""
@@ -386,6 +512,8 @@ class TransmittingApp(ctk.CTk):
         threading.Thread(target=self.start_receive_process, daemon=True).start()
         with open('./rx.tmp','wb') as output:pass
         threading.Thread(target=self.file_decoder,daemon=True).start()
+
+
     def update_progress(self):
         """Simulate loading progress"""
         progress = 0
@@ -394,7 +522,7 @@ class TransmittingApp(ctk.CTk):
             progress += 0.015  # Increment progress
             self.progress_bar.set(progress)
         self.receive_status_icon.configure(text="🌱", text_color="gray")
-        self.receive_status_text.configure(text="Ready to recieve", text_color="gray")
+        self.receive_status_text.configure(text="Ready to receive", text_color="gray")
 
 
     def start_receive_process(self):
@@ -493,29 +621,6 @@ class TransmittingApp(ctk.CTk):
         self.landing_frame.pack_forget()
         self.file_frame.pack(expand=True, fill="both")
 
-    def show_landing_page(self):
-        """Return to landing page"""
-        # Hide the current frame (either file_frame or receive_frame)
-        if self.file_frame.winfo_ismapped():
-            self.file_frame.pack_forget()
-        elif self.receive_frame.winfo_ismapped():
-            self.receive_frame.pack_forget()
-
-        # Show landing page
-        self.landing_frame.pack(expand=True, fill="both")
-
-        # Reset file selection UI elements
-        self.status_label.configure(text="")
-        self.send_file_button.configure(state="disabled")
-        self.file_path_label.configure(text="No file selected")
-        self.file_size_label.configure(text="")
-        self.file_icon_label.configure(text_color="gray")
-        self.selected_file_path = None
-
-        # Reset receive page UI elements
-        self.receive_status_icon.configure(text="🔄", text_color="gray")
-        self.receive_status_text.configure(text="Waiting to Receive", text_color="gray")
-        self.received_file_label.configure(text="")
 
     def select_file(self):
         """Open file dialog to select a file"""
@@ -542,18 +647,40 @@ class TransmittingApp(ctk.CTk):
             size_bytes /= 1024.0
 
     def send_file(self):
-        """Send file using Telelink.py"""
+        """Modified send_file with loading screen"""
         if not self.selected_file_path:
             tk.messagebox.showerror("Error", "Please select a file first!")
             return
 
-        # Disable send button during transmission
-        self.send_file_button.configure(state="disabled")
+        
 
-        # Clear any previous status message
-        self.status_label.configure(text="")
+        # Start progress and send process
+        threading.Thread(target=self.run_telelink, daemon=True).start()
+        threading.Thread(target=self.update_send_progress, daemon=True).start()
+        
+    def update_send_progress(self):
+        """Update send loading progress"""
 
-        def run_telelink():
+        # Show loading frame
+        self.file_frame.pack_forget()
+        self.send_loading_frame.pack(expand=True, fill="both")
+        
+        # Reset progress elements
+        self.send_progress_bar.set(0)
+        self.send_status_icon.configure(text="🫘", text_color="gray")
+        self.send_status_text.configure(text="Preparing to Send...")
+        self.sending_file_label.configure(text=os.path.basename(self.selected_file_path))
+
+        progress = 0
+        while progress < 1.0:
+            time.sleep(0.1)
+            progress += 0.015
+            self.send_progress_bar.set(progress)
+        # self.send_status_icon.configure(text="🌳", text_color="green")
+        # self.send_status_text.configure(text="File Sent Successfully", text_color="green")
+
+
+    def run_telelink(self):
             try:
                 # Set environment variable for file path
                 tmp_file = "./input.tmp"  # Temporary file path
@@ -612,6 +739,7 @@ class TransmittingApp(ctk.CTk):
                 else:
                     # Failure: Handle the error
                     self.after(0, self.handle_transmission_error, stderr)
+                    self.show_landing_page
 
             except subprocess.CalledProcessError as e:
                 # Handle subprocess errors
@@ -620,29 +748,20 @@ class TransmittingApp(ctk.CTk):
                 # Handle other unexpected errors
                 self.after(0, self.handle_transmission_error, str(e))
 
-        # Run in a separate thread to prevent GUI freezing
-        threading.Thread(target=run_telelink, daemon=True).start()
 
     def handle_transmission_success(self, output):
-        """Handle successful file transmission"""
-        self.status_label.configure(
-            text="✅ Transmission Successful", 
-            text_color="green"
-        )
-        self.send_file_button.configure(state="normal")
-        
-        # Optional: Show output from Telelink.py if needed
-        if output:
-            tk.messagebox.showinfo("Transmission Details", output)
+        """Updated transmission success handler"""
+        self.send_status_icon.configure(text="🌳", text_color="green")
+        self.send_status_text.configure(text="✅ Transmission Successful", text_color="green")
+        self.send_progress_bar.set(1.0)
 
     def handle_transmission_error(self, error):
-        """Handle transmission errors"""
-        self.status_label.configure(
-            text="❌ Transmission Failed", 
-            text_color="red"
-        )
-        self.send_file_button.configure(state="normal")
+        """Updated transmission error handler"""
+        self.send_status_icon.configure(text="❌", text_color="red")
+        self.send_status_text.configure(text="Transmission Failed", text_color="red")
         tk.messagebox.showerror("Error", error)
+        
+
 
 if __name__ == "__main__":
     app = TransmittingApp()
