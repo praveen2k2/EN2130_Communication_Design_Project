@@ -554,25 +554,37 @@ class TransmittingApp(ctk.CTk):
 
     def file_decoder(self):
             global content
+            filesize_old=0
+            last_time=time.time()
 
             def open_file(file_path):
                 subprocess.run(["xdg-open", file_path])
-            print("file decoder started")
+            self.received_file_label.configure(text="File decoder started...")
+
             while(True):
                 with open('./rx.tmp', 'rb') as file:
-
+                    transmited_lenth=os.path.getsize('./rx.tmp')
                     content = file.read()
-                    if(len(content)>10):print('conncted')
+                    speed=(transmited_lenth-filesize_old)/(time.time()-last_time)
+                    if(len(content)>10):
+                        print('conncted')
+                        self.receive_status_text.configure(text="Connected with the host", text_color="green")
+                        self.received_file_label.configure(text=f"{transmited_lenth/1000}KB received. Receiving at {round(speed*8/1000,3)}Kbps")
+                    filesize_old=transmited_lenth
+                    last_time=time.time()
                     time.sleep(1)
+                    
 
                     start= content.find(b'sts')
                     if start!= -1:
                             print('file recieving')
                             end_name= content.rfind(b'|||')
                             name=content[start+3:end_name]
+                            self.receive_status_icon.configure(text=f"{name.decode()}", text_color="green")
                             print(name)
                             end_index = content.rfind(b'end')
                             if end_index != -1:
+                                self.receive_status_text.configure(text=f"{name}File received", text_color="green")
                                 start= content.find(b'|||')
                                 content = content[start+3:end_index]
                                 os.environ['RECEIVE_FILE']=name.decode()
