@@ -28,6 +28,7 @@ class TransmittingApp(ctk.CTk):
             print(f"Error setting icon: {e}")
 
         # Configure window
+
         self.title("TeleLink Communications")
         self.geometry("1000x720")
         self.configure(fg_color="#FFFFFF")
@@ -556,6 +557,7 @@ class TransmittingApp(ctk.CTk):
             global content
             filesize_old=0
             last_time=time.time()
+            name=""
 
             def open_file(file_path):
                 subprocess.run(["xdg-open", file_path])
@@ -568,7 +570,7 @@ class TransmittingApp(ctk.CTk):
                     content = file.read()
                     speed=(transmited_lenth-filesize_old)/(time.time()-last_time)
                     if(len(content)>10):
-                        print('conncted')
+                        #print('conncted')
                         self.receive_status_text.configure(text="Connected with the host", text_color="green")
                         self.received_file_label.configure(text=f"{transmited_lenth/1000}KB received. Receiving at {round(speed*8/1000,3)}Kbps")
                     filesize_old=transmited_lenth
@@ -577,11 +579,14 @@ class TransmittingApp(ctk.CTk):
 
                     start= content.find(b'sts')
                     if start!= -1:
-                            print('file recieving')
-                            end_name= content.rfind(b'|||')
-                            name=content[start+3:end_name]
-                            self.receive_status_icon.configure(text=f"{name.decode()}", text_color="green")
-                            print(name)
+                            #print('file recieving')
+                            try:
+                                if(not(name)):
+                                    end_name= content.rfind(b'|||')
+                                    name=content[start+3:end_name]
+                                    self.receive_status_icon.configure(text=f"{name.decode()}", text_color="green")
+                            except:pass
+                            #print(name)
                             end_index = content.rfind(b'end')
                             if end_index != -1:
                                 self.receive_status_text.configure(text=f"{name.decode()}File received", text_color="green")

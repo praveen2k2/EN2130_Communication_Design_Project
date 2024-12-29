@@ -554,8 +554,8 @@ blocks:
     rangeType: float
     start: '18'
     step: '1'
-    stop: '60'
-    value: '50'
+    stop: '64'
+    value: '60'
     widget: counter_slider
   states:
     bus_sink: false
@@ -1850,7 +1850,7 @@ blocks:
     comment: ''
     dev_args: ''
     freq_correction: '0'
-    gain: '30.0'
+    gain: '50.0'
     maxoutbuf: '0'
     minoutbuf: '0'
     samp_rate: samp_rate_blade*2

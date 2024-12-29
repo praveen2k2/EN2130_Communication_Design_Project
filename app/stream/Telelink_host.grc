@@ -161,7 +161,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3400, 132.0]
+    coordinate: [3416, 104.0]
     rotation: 0
     state: enabled
 - name: freq_offset
@@ -336,7 +336,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3312, 248.0]
+    coordinate: [3336, 120.0]
     rotation: 0
     state: enabled
 - name: rf_gain_0
@@ -357,7 +357,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3312, 120.0]
+    coordinate: [3264, 120.0]
     rotation: 0
     state: enabled
 - name: rf_gain_sink
@@ -378,7 +378,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3240, 112.0]
+    coordinate: [3168, 112.0]
     rotation: 0
     state: enabled
 - name: rrc_taps
@@ -495,7 +495,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [3192, 120.0]
+    coordinate: [3288, 256.0]
     rotation: 0
     state: enabled
 - name: timing_loop_bw
@@ -554,14 +554,14 @@ blocks:
     rangeType: float
     start: '18'
     step: '1'
-    stop: '60'
-    value: '50'
+    stop: '64'
+    value: '60'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [2640, 500.0]
+    coordinate: [3504, 240.0]
     rotation: 0
     state: enabled
 - name: variable_adaptive_algorithm_0

@@ -216,7 +216,7 @@ class Telelink_client(gr.top_block, Qt.QWidget):
         self.soapy_bladerf_source_0.set_bandwidth(0, rxbw)
         self.soapy_bladerf_source_0.set_frequency(0, freq)
         self.soapy_bladerf_source_0.set_frequency_correction(0, 0)
-        self.soapy_bladerf_source_0.set_gain(0, min(max(30.0, -1.0), 60.0))
+        self.soapy_bladerf_source_0.set_gain(0, min(max(50.0, -1.0), 60.0))
         self._rf_gain_sink_range = qtgui.Range(0, 60, 1, 10, 200)
         self._rf_gain_sink_win = qtgui.RangeWidget(self._rf_gain_sink_range, self.set_rf_gain_sink, "RF gain sink", "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_layout.addWidget(self._rf_gain_sink_win)

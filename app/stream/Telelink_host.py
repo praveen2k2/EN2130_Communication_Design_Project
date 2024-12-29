@@ -117,7 +117,7 @@ class Telelink_host(gr.top_block, Qt.QWidget):
         self.k = k = 7
         self.variable_qtgui_entry_0 = variable_qtgui_entry_0 = ''
         self.variable_adaptive_algorithm_0 = variable_adaptive_algorithm_0 = digital.adaptive_algorithm_cma( qpsk, .0001, 4).base()
-        self.txgain = txgain = 50
+        self.txgain = txgain = 60
         self.txbw = txbw = 9000
         self.tx_freq = tx_freq = 600e6
         self.timing_loop_bw = timing_loop_bw = 6.28/100.0
@@ -165,7 +165,7 @@ class Telelink_host(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._txgain_range = qtgui.Range(18, 60, 1, 50, 200)
+        self._txgain_range = qtgui.Range(18, 64, 1, 60, 200)
         self._txgain_win = qtgui.RangeWidget(self._txgain_range, self.set_txgain, "'txgain'", "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_layout.addWidget(self._txgain_win)
         self.received = Qt.QTabWidget()
