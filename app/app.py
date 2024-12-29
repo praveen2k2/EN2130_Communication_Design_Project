@@ -563,6 +563,7 @@ class TransmittingApp(ctk.CTk):
 
             while(True):
                 with open('./rx.tmp', 'rb') as file:
+                    time.sleep(1)
                     transmited_lenth=os.path.getsize('./rx.tmp')
                     content = file.read()
                     speed=(transmited_lenth-filesize_old)/(time.time()-last_time)
@@ -572,7 +573,6 @@ class TransmittingApp(ctk.CTk):
                         self.received_file_label.configure(text=f"{transmited_lenth/1000}KB received. Receiving at {round(speed*8/1000,3)}Kbps")
                     filesize_old=transmited_lenth
                     last_time=time.time()
-                    time.sleep(1)
                     
 
                     start= content.find(b'sts')

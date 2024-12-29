@@ -914,7 +914,7 @@ blocks:
     bus_structure: null
     coordinate: [880, 540.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_throttle2_0_0
   id: blocks_throttle2
   parameters:
@@ -1009,7 +1009,7 @@ blocks:
     bus_structure: null
     coordinate: [1208, 496.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: controls
   id: qtgui_tab_widget
   parameters:
@@ -1366,7 +1366,7 @@ blocks:
     bus_structure: null
     coordinate: [2312, 316.0]
     rotation: 180
-    state: disabled
+    state: enabled
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -1861,7 +1861,7 @@ blocks:
     bus_structure: null
     coordinate: [1232, 312.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_0_0
   id: virtual_sink
   parameters:
