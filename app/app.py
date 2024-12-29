@@ -584,7 +584,7 @@ class TransmittingApp(ctk.CTk):
                             print(name)
                             end_index = content.rfind(b'end')
                             if end_index != -1:
-                                self.receive_status_text.configure(text=f"{name}File received", text_color="green")
+                                self.receive_status_text.configure(text=f"{name.decode()}File received", text_color="green")
                                 start= content.find(b'|||')
                                 content = content[start+3:end_index]
                                 os.environ['RECEIVE_FILE']=name.decode()
@@ -593,6 +593,8 @@ class TransmittingApp(ctk.CTk):
                                     output.write(content)
                                     with open('./rx.tmp','wb') as output:pass
                                 open_file(path)
+                    elif(len(content)>10):self.receive_status_icon.configure("synchronizing..", text_color="red")
+                            
         
     def handle_receive_success(self, output):
         """Handle successful file reception"""
