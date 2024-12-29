@@ -669,12 +669,14 @@ class TransmittingApp(ctk.CTk):
         self.send_progress_bar.set(0)
         speed=0
         count=0
+        last_time=time.time()
         while  transmited_lenth<imputtep_size:
             time.sleep(0.1)
             if(count>=10):
-                sendedsize=os.path.getsize('./out')
-                speed=(sendedsize-filesize_old)/1.1
-                filesize_old=sendedsize
+                transmited_lenth=os.path.getsize('./out')
+                speed=(transmited_lenth-filesize_old)/(time.time()-last_time)
+                filesize_old=transmited_lenth
+                last_time=time.time()
                 count=0
             transmited_lenth=os.path.getsize('./out')
 
