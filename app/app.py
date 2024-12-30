@@ -436,7 +436,7 @@ class TransmittingApp(ctk.CTk):
             
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
-                ['python3', self.path+r'/stream/Telelink_host.py'],
+                ['python', self.path+r'/stream/Telelink_host.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
@@ -481,7 +481,7 @@ class TransmittingApp(ctk.CTk):
         try:
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
-                ['python3', self.path+'/stream/Telelink_client.py'],
+                ['python', self.path+'/stream/Telelink_client.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
@@ -532,7 +532,7 @@ class TransmittingApp(ctk.CTk):
         try:
             # Run Telelink_receiver.py as a subprocess
             process = subprocess.Popen(
-                ['python3', self.path+'/receiver/Telelink_receiver.py'],
+                ['python', self.path+'/receiver/Telelink_receiver.py'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
@@ -774,7 +774,7 @@ class TransmittingApp(ctk.CTk):
 
                 # Start Telelink.py as a subprocess
                 process = subprocess.Popen(
-                    ['python3', self.path+'/transmitter/Telelink_transmitter.py'],
+                    ['python', self.path+'/transmitter/Telelink_transmitter.py'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True
